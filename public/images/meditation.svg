@@ -1,0 +1,53 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="auraGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8" />
+      <stop offset="70%" style="stop-color:#FFA500;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.1" />
+    </radialGradient>
+    <filter id="auraGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#0a0a23"/>
+  
+  <!-- Meditation aura -->
+  <circle cx="200" cy="150" r="120" fill="url(#auraGradient)" filter="url(#auraGlow)"/>
+  
+  <!-- Person in meditation pose (simplified) -->
+  <circle cx="200" cy="120" r="25" fill="#C0C0C0" opacity="0.8"/> <!-- Head -->
+  <ellipse cx="200" cy="180" rx="35" ry="50" fill="#C0C0C0" opacity="0.8"/> <!-- Body -->
+  
+  <!-- Lotus position legs -->
+  <ellipse cx="180" cy="220" rx="15" ry="25" fill="#C0C0C0" opacity="0.8"/>
+  <ellipse cx="220" cy="220" rx="15" ry="25" fill="#C0C0C0" opacity="0.8"/>
+  
+  <!-- Hands in meditation mudra -->
+  <circle cx="170" cy="160" r="8" fill="#C0C0C0" opacity="0.8"/>
+  <circle cx="230" cy="160" r="8" fill="#C0C0C0" opacity="0.8"/>
+  
+  <!-- Energy chakras -->
+  <circle cx="200" cy="150" r="3" fill="#FFD700" opacity="0.9"/> <!-- Crown -->
+  <circle cx="200" cy="170" r="3" fill="#FF69B4" opacity="0.9"/> <!-- Heart -->
+  <circle cx="200" cy="190" r="3" fill="#32CD32" opacity="0.9"/> <!-- Solar Plexus -->
+  
+  <!-- Floating energy orbs -->
+  <circle cx="150" cy="100" r="8" fill="#FFD700" opacity="0.6"/>
+  <circle cx="250" cy="100" r="6" fill="#FFD700" opacity="0.6"/>
+  <circle cx="120" cy="200" r="5" fill="#FFD700" opacity="0.6"/>
+  <circle cx="280" cy="200" r="7" fill="#FFD700" opacity="0.6"/>
+  
+  <!-- Mystical symbols -->
+  <text x="200" y="80" text-anchor="middle" fill="#FFD700" font-size="20" opacity="0.7">☸</text>
+  <text x="200" y="250" text-anchor="middle" fill="#FFD700" font-size="20" opacity="0.7">🕉</text>
+  
+  <!-- Energy waves -->
+  <path d="M 100 150 Q 200 100 300 150" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.3"/>
+  <path d="M 100 160 Q 200 110 300 160" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.2"/>
+</svg> 
