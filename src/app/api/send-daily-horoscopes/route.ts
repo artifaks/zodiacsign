@@ -2,14 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { supabase } from '@/lib/supabase';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Only initialize Resend if API key is available
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 // This would be called by a cron job or scheduled task
 export async function POST(request: NextRequest) {
   try {
+    // Check if required environment variables are set
+    if (!resend) {
+      return NextResponse.json({ 
+        error: 'Email service not configured. RESEND_API_KEY is missing.' 
+      }, { status: 500 });
+    }
+
     // Verify authorization (you can add your own secret key)
     const authHeader = request.headers.get('authorization');
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET_KEY}`) {
+    const cronSecret = process.env.CRON_SECRET_KEY;
+    
+    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

@@ -6,6 +6,20 @@ export async function POST(req: NextRequest) {
   try {
     const { moonPhase, energy } = await req.json();
     
+    // Check if OpenAI API key is configured
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    if (!openaiApiKey) {
+      // Return a fallback ritual if API is not configured
+      return new Response(JSON.stringify({ 
+        ritual: "Create a sacred space with crystals and candles. Meditate on your intentions while holding a clear quartz crystal."
+      }), { 
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+    }
+    
     const prompt = `Give me a 1-paragraph calming spiritual ritual for a ${moonPhase} moon. Energy focus: ${energy}. 
 
 Requirements:
@@ -22,7 +36,7 @@ Format as a simple ritual instruction that someone can follow immediately.`;
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Authorization": `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-4",

@@ -6,13 +6,26 @@ export async function POST(req: NextRequest) {
   try {
     const { sun, moon } = await req.json();
     
+    // Check if OpenAI API key is configured
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    if (!openaiApiKey) {
+      return new Response(JSON.stringify({ 
+        error: 'OpenAI API is not configured. Please check your environment variables.' 
+      }), { 
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+    }
+    
     const prompt = `Generate a short, beautiful astrology interpretation based on:\n\nSun Sign: ${sun}\nMoon Sign: ${moon}\n\nTone: mystical, empowering, poetic.\nLength: 150 words.`;
     
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Authorization": `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-4",

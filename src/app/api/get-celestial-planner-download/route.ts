@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import Stripe from 'stripe';
 
 // Celestial Planner file mapping
 const celestialPlannerFiles = {
@@ -20,8 +21,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if Stripe is configured
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecretKey) {
+      return NextResponse.json(
+        { error: 'Stripe is not configured. Please check your environment variables.' },
+        { status: 500 }
+      );
+    }
+
     // Verify payment with Stripe
-    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+    const stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2025-05-28.basil',
+    });
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== 'paid') {
@@ -49,7 +61,7 @@ export async function POST(request: NextRequest) {
             session_id: sessionId,
             product_id: productId,
             customer_email: session.customer_details?.email,
-            amount: session.amount_total / 100, // Convert from cents
+            amount: session.amount_total ? session.amount_total / 100 : 0, // Convert from cents
             status: 'completed'
           });
       } catch (error) {

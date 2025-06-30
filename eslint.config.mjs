@@ -16,12 +16,11 @@ export default [
   {
     rules: {
       // Disable some strict rules for now to allow build to pass
-      '@typescript-eslint/no-unused-vars': 'warn', // Change from error to warning
-      '@typescript-eslint/no-explicit-any': 'warn', // Change from error to warning
+      'no-unused-vars': 'warn', // Use standard ESLint rule instead
       'react/no-unescaped-entities': 'warn', // Change from error to warning
       '@next/next/no-img-element': 'warn', // Change from error to warning
       'react-hooks/exhaustive-deps': 'warn', // Change from error to warning
-      '@typescript-eslint/no-require-imports': 'warn', // Change from error to warning
+      'no-require-imports': 'warn', // Use standard ESLint rule instead
     },
   },
 ];
